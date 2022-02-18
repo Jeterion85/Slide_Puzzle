@@ -5,6 +5,7 @@ let rows=4;
 let w,h;
 let blackSpotR=Math.floor(Math.random()*rows);
 let blackSpotC=Math.floor(Math.random()*cols);
+let indexNeighbors=[[-1,0],[1,0],[0,-1],[0,1]];
 
 function preload(){
     source=loadImage("img.jpg");
@@ -27,19 +28,17 @@ function setup(){
 }
 
 function simpleShuffle() {
+
   let previousPosition=[null,null];
   for(let shuff=0;shuff<100;shuff++){
     let neighbors=[];
-    for(let i=-1;i<=1;i+=2){
-      for(let j=-1;j<=1;j+=2){
-        console.log((blackSpotR+i)<=null);
-        if((blackSpotR+i)<=null){
-          console.log("IN");
-        }
+    for(let element of indexNeighbors){
+      if (0<=(blackSpotR+element[0]) && (blackSpotR+element[0])<=3 && 0<=(blackSpotC+element[1]) && (blackSpotC+element[1])<=3 && !(blackSpotR+element[0]==previousPosition[0] && (blackSpotC+element[1])==previousPosition[1])){
+        neighbors.push([blackSpotR+element[0],blackSpotC+element[1]]);
       }
     }
-
-    break;
+    let randIndex = Math.floor(Math.random() * neighbors.length);
+    swap(neighbors[randIndex][0], neighbors[randIndex][1]);
   }
 }
 

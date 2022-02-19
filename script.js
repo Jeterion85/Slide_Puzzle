@@ -43,10 +43,6 @@ function simpleShuffle() {
 }
 
 function swap(i,j){
-  let temp = board[blackSpotR][blackSpotC];
-  board[blackSpotR][blackSpotC] = board[i][j];
-  board[blackSpotR][blackSpotC].currentI = temp.currentI;
-  board[blackSpotR][blackSpotC].currentJ = temp.currentJ;
 }
 
 function mousePressed(){

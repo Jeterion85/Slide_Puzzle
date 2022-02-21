@@ -30,16 +30,14 @@ function setup(){
 }
 
 function simpleShuffle() {
-  let previousBlackSpot=[-1,-1];
-  for(let shuff=0;shuff<20;shuff++) {
+  for(let shuff=0;shuff<50;shuff++) {
     let neighbors=[];
     for(let index=0;index<indexNeighbors.length;index++) {
-        if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3 && (blackSpotR+indexNeighbors[index][0])!=previousBlackSpot[0] && (blackSpotC+indexNeighbors[index][1])!=previousBlackSpot[1]){
+        if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3){
           neighbors.push([blackSpotR+indexNeighbors[index][0],blackSpotC+indexNeighbors[index][1]]);
         }
     }
     let randIndex=Math.floor(Math.random()*neighbors.length);
-    previousBlackSpot=[blackSpotR,blackSpotC];
     swap(neighbors[randIndex][0],neighbors[randIndex][1]);
   }
 }
@@ -50,10 +48,17 @@ function swap(i,j){
   board[i][j]=temp;
   blackSpotR=i;
   blackSpotC=j;
+  console.log(blackSpotR,blackSpotC);
 }
 
 function mousePressed(){
+  let i=floor(mouseY/h);
+  let j=floor(mouseX/w);
+  tileMove(i,j);
+}
 
+function tileMove(i,j){
+  swap(i,j);
 }
 
 function draw(){
@@ -63,6 +68,9 @@ function draw(){
         image(board[i][j].img,j*100,i*100);
         strokeWeight(2);
         noFill();
+        rect(j*100,i*100,w,h);
+      }else{
+        fill(0,0,0);
         rect(j*100,i*100,w,h);
       }
     }

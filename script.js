@@ -12,6 +12,8 @@ function preload(){
 }
 
 function setup(){
+  blackSpotR=2;
+  blackSpotC=2;
   createCanvas(400,400);
   w=width/cols; //COLS
   h=height/cols; //ROWS
@@ -20,7 +22,7 @@ function setup(){
     for(let j=0;j<cols;j++){
       let img=createImage(w,h);
       img.copy(source,j*100,i*100,w,h,0,0,w,h);
-      board[i][j]=new Tile(img,i*100,j*100,i,j);
+      board[i][j]=new Tile(img,i,j);
     }
   }
   board[blackSpotR][blackSpotC].img=-1;
@@ -28,21 +30,26 @@ function setup(){
 }
 
 function simpleShuffle() {
-
-  let previousPosition=[null,null];
-  for(let shuff=0;shuff<100;shuff++){
+  let previousBlackSpot=[-1,-1];
+  for(let shuff=0;shuff<20;shuff++) {
     let neighbors=[];
-    for(let element of indexNeighbors){
-      if (0<=(blackSpotR+element[0]) && (blackSpotR+element[0])<=3 && 0<=(blackSpotC+element[1]) && (blackSpotC+element[1])<=3 && !(blackSpotR+element[0]==previousPosition[0] && (blackSpotC+element[1])==previousPosition[1])){
-        neighbors.push([blackSpotR+element[0],blackSpotC+element[1]]);
-      }
+    for(let index=0;index<indexNeighbors.length;index++) {
+        if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3 && (blackSpotR+indexNeighbors[index][0])!=previousBlackSpot[0] && (blackSpotC+indexNeighbors[index][1])!=previousBlackSpot[1]){
+          neighbors.push([blackSpotR+indexNeighbors[index][0],blackSpotC+indexNeighbors[index][1]]);
+        }
     }
-    let randIndex = Math.floor(Math.random() * neighbors.length);
-    swap(neighbors[randIndex][0], neighbors[randIndex][1]);
+    let randIndex=Math.floor(Math.random()*neighbors.length);
+    previousBlackSpot=[blackSpotR,blackSpotC];
+    swap(neighbors[randIndex][0],neighbors[randIndex][1]);
   }
 }
 
 function swap(i,j){
+  let temp=board[blackSpotR][blackSpotC];
+  board[blackSpotR][blackSpotC]=board[i][j];
+  board[i][j]=temp;
+  blackSpotR=i;
+  blackSpotC=j;
 }
 
 function mousePressed(){
@@ -53,7 +60,7 @@ function draw(){
   for(let i = 0; i <4;i++){
     for(let j = 0; j < 4; j++){
       if(board[i][j].img!=-1){
-        image(board[i][j].img,board[i][j].currentJ,board[i][j].currentI);
+        image(board[i][j].img,j*100,i*100);
         strokeWeight(2);
         noFill();
         rect(j*100,i*100,w,h);

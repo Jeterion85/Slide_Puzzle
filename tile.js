@@ -1,8 +1,6 @@
 class Tile {
-  constructor(img,currentI,currentJ,originI,originJ) {
+  constructor(img,originI,originJ) {
     this.img = img;
-    this.currentI=currentI;
-    this.currentJ=currentJ;
     this.originI=originI;
     this.originJ=originJ;
   }

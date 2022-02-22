@@ -29,7 +29,7 @@ function setup(){
 }
 
 function simpleShuffle() {
-  for(let shuff=0;shuff<20;shuff++) {
+  for(let shuff=0;shuff<5;shuff++) {
     let neighbors=[];
     for(let index=0;index<indexNeighbors.length;index++) {
         if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3){

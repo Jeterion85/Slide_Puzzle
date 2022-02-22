@@ -29,7 +29,7 @@ function setup(){
 }
 
 function simpleShuffle() {
-  for(let shuff=0;shuff<100;shuff++) {
+  for(let shuff=0;shuff<20;shuff++) {
     let neighbors=[];
     for(let index=0;index<indexNeighbors.length;index++) {
         if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3){
@@ -64,8 +64,22 @@ function tileMove(i,j){
         break;
     }
   }
+  checkWin();
 }
 
+function checkWin() {
+  let win=true;
+  for(let i=0;i<board.length;i++) {
+    for(let j=0;j<board[i].length;j++) {
+      if (i!= board[i][j].originI || j!= board[i][j].originJ){
+        win=false;
+      }
+    }
+  }
+  if(win){
+    console.log('win');
+  }
+}
 
 function draw(){
   for(let i = 0; i<4;i++){

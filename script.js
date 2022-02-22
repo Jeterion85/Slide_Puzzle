@@ -7,13 +7,12 @@ let blackSpotR=Math.floor(Math.random()*rows);
 let blackSpotC=Math.floor(Math.random()*cols);
 let indexNeighbors=[[-1,0],[1,0],[0,-1],[0,1]];
 
+
 function preload(){
     source=loadImage("img.jpg");
 }
 
 function setup(){
-  blackSpotR=2;
-  blackSpotC=2;
   createCanvas(400,400);
   w=width/cols; //COLS
   h=height/cols; //ROWS
@@ -30,7 +29,7 @@ function setup(){
 }
 
 function simpleShuffle() {
-  for(let shuff=0;shuff<50;shuff++) {
+  for(let shuff=0;shuff<100;shuff++) {
     let neighbors=[];
     for(let index=0;index<indexNeighbors.length;index++) {
         if(0<=(blackSpotR+indexNeighbors[index][0]) && (blackSpotR+indexNeighbors[index][0])<=3 && 0<=(blackSpotC+indexNeighbors[index][1]) && (blackSpotC+indexNeighbors[index][1])<=3){
@@ -48,7 +47,6 @@ function swap(i,j){
   board[i][j]=temp;
   blackSpotR=i;
   blackSpotC=j;
-  console.log(blackSpotR,blackSpotC);
 }
 
 function mousePressed(){
@@ -58,12 +56,20 @@ function mousePressed(){
 }
 
 function tileMove(i,j){
-  swap(i,j);
+  let indexNeighbor=false;
+  for(let index=0;index<indexNeighbors.length;index++){
+    if(i==(blackSpotR+indexNeighbors[index][0]) && j==(blackSpotC+indexNeighbors[index][1])&& 0<=i && i<=3 && 0<=j && j<=3){
+        indexNeighbor=true;
+        swap(i,j);
+        break;
+    }
+  }
 }
 
+
 function draw(){
-  for(let i = 0; i <4;i++){
-    for(let j = 0; j < 4; j++){
+  for(let i = 0; i<4;i++){
+    for(let j = 0; j<4; j++){
       if(board[i][j].img!=-1){
         image(board[i][j].img,j*100,i*100);
         strokeWeight(2);
